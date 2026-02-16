@@ -1,0 +1,42 @@
+<% var pageTitle = 'Phases'; %>
+<%- include('partials/head') %>
+<%- include('partials/nav') %>
+
+<div class="page-header">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="/">Home</a> <span>/</span> <span>Phases</span>
+    </div>
+    <h1>The 8 VISTADEL Phases</h1>
+    <p>A complete framework from idea validation to production launch</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="vistadel-flow">
+      <% phases.forEach(function(phase, i) { %>
+        <div class="flow-step">
+          <a href="/phases/<%= phase.slug %>" class="flow-letter" title="<%= phase.title %>"><%= phase.id %></a>
+        </div>
+        <% if (i < phases.length - 1) { %>
+          <span class="flow-arrow">&rarr;</span>
+        <% } %>
+      <% }); %>
+    </div>
+
+    <div class="phases-grid">
+      <% phases.forEach(function(phase) { %>
+        <a href="/phases/<%= phase.slug %>" class="phase-card">
+          <div class="phase-icon"><%= phase.icon %></div>
+          <div class="phase-letter"><%= phase.id %></div>
+          <h3><%= phase.title %></h3>
+          <p><%= phase.tagline %></p>
+          <span class="phase-link">View phase &rarr;</span>
+        </a>
+      <% }); %>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

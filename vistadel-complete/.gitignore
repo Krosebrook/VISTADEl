@@ -1,0 +1,52 @@
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDEs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Private/Confidential
+/private/
+/TIER-1-INTERNAL/
+.env
+.env.local
+secrets.md
+credentials.md
+
+# Build artifacts
+/build/
+/dist/
+node_modules/
+
+# Temp files
+*.tmp
+*.bak
+*.backup
+
+# Notion exports (working files)
+*.notion.export
+/notion-exports/
+
+# Google Docs exports (working files)
+/google-docs-exports/
+
+# Video/Media (large files)
+*.mp4
+*.mov
+*.wav
+/videos/raw/
+/audio/raw/
+
+# Generate docs (build output)
+/docs-built/
+/site/
+
+# AI/LLM working files
+/prompts-testing/
+/claude-outputs-draft/

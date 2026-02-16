@@ -1,0 +1,43 @@
+<% var pageTitle = 'Phase ' + phase.id + ': ' + phase.title; %>
+<%- include('partials/head') %>
+<%- include('partials/nav') %>
+
+<div class="page-header">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="/">Home</a> <span>/</span> <a href="/phases">Phases</a> <span>/</span> <span><%= phase.title %></span>
+    </div>
+    <h1><%= phase.icon %> Phase <%= phase.id %>: <%= phase.title %></h1>
+    <p><%= phase.tagline %></p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="content-layout">
+      <aside class="sidebar">
+        <ul class="sidebar-nav">
+          <% phases.forEach(function(p) { %>
+            <li>
+              <a href="/phases/<%= p.slug %>" class="<%= p.slug === phase.slug ? 'active' : '' %>">
+                <%= p.icon %> <%= p.id %>: <%= p.title %>
+              </a>
+            </li>
+          <% }); %>
+        </ul>
+      </aside>
+      <main class="markdown-content">
+        <% if (content) { %>
+          <%- content %>
+        <% } else { %>
+          <div class="empty-state">
+            <h3>Content Coming Soon</h3>
+            <p>This phase is currently in development. Check the <a href="/build-status">build status</a> for updates.</p>
+          </div>
+        <% } %>
+      </main>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

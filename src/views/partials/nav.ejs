@@ -1,0 +1,16 @@
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="/" class="nav-brand">
+      <span>VISTADEL</span> Framework
+    </a>
+    <button class="mobile-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">&#9776;</button>
+    <ul class="nav-links">
+      <li><a href="/" class="<%= activePage === 'home' ? 'active' : '' %>">Home</a></li>
+      <li><a href="/phases" class="<%= activePage === 'phases' ? 'active' : '' %>">Phases</a></li>
+      <li><a href="/case-studies" class="<%= activePage === 'case-studies' ? 'active' : '' %>">Case Studies</a></li>
+      <li><a href="/tiers" class="<%= activePage === 'tiers' ? 'active' : '' %>">Tiers</a></li>
+      <li><a href="/contributing" class="<%= activePage === 'contributing' ? 'active' : '' %>">Contributing</a></li>
+      <li><a href="/build-status" class="<%= activePage === 'build-status' ? 'active' : '' %>">Status</a></li>
+    </ul>
+  </div>
+</nav>

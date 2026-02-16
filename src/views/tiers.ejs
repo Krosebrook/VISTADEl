@@ -1,0 +1,30 @@
+<% var pageTitle = 'Usage Tiers'; %>
+<%- include('partials/head') %>
+<%- include('partials/nav') %>
+
+<div class="page-header">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="/">Home</a> <span>/</span> <span>Tiers</span>
+    </div>
+    <h1>Three Ways to Use VISTADEL</h1>
+    <p>Adapt the framework to your team, your clients, or the community</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="tiers-grid">
+      <% tiers.forEach(function(tier) { %>
+        <a href="/tiers/<%= tier.slug %>" class="tier-card" style="border-top: 4px solid <%= tier.color %>">
+          <div class="tier-number" style="color: <%= tier.color %>">Tier <%= tier.id %></div>
+          <h3><%= tier.title %></h3>
+          <div class="subtitle"><%= tier.subtitle %></div>
+          <p><%= tier.description %></p>
+        </a>
+      <% }); %>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

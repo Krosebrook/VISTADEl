@@ -1,0 +1,29 @@
+<% var pageTitle = 'Case Studies'; %>
+<%- include('partials/head') %>
+<%- include('partials/nav') %>
+
+<div class="page-header">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="/">Home</a> <span>/</span> <span>Case Studies</span>
+    </div>
+    <h1>Real Case Studies</h1>
+    <p>Real-world examples across professional services, healthcare, SaaS, eCommerce, and manufacturing</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="cases-grid">
+      <% caseStudies.forEach(function(study) { %>
+        <a href="/case-studies/<%= study.slug %>" class="case-card">
+          <div class="case-industry" style="background: <%= study.color %>"><%= study.industry %></div>
+          <h3><%= study.title %></h3>
+          <div class="case-subtitle"><%= study.subtitle %></div>
+        </a>
+      <% }); %>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

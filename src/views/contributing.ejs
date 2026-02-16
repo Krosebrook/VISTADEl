@@ -1,0 +1,30 @@
+<% var pageTitle = 'Contributing'; %>
+<%- include('partials/head') %>
+<%- include('partials/nav') %>
+
+<div class="page-header">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="/">Home</a> <span>/</span> <span>Contributing</span>
+    </div>
+    <h1>Contributing to VISTADEL</h1>
+    <p>Help improve the framework with real examples, fixes, and new content</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <main class="markdown-content" style="max-width: 900px; margin: 0 auto;">
+      <% if (content) { %>
+        <%- content %>
+      <% } else { %>
+        <div class="empty-state">
+          <h3>Content Coming Soon</h3>
+          <p>Contributing guidelines are being developed.</p>
+        </div>
+      <% } %>
+    </main>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,43 @@
+<% var pageTitle = study.title; %>
+<%- include('partials/head') %>
+<%- include('partials/nav') %>
+
+<div class="page-header">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="/">Home</a> <span>/</span> <a href="/case-studies">Case Studies</a> <span>/</span> <span><%= study.title %></span>
+    </div>
+    <h1><%= study.title %></h1>
+    <p><%= study.subtitle %> &mdash; <%= study.industry %></p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="content-layout">
+      <aside class="sidebar">
+        <ul class="sidebar-nav">
+          <% caseStudies.forEach(function(s) { %>
+            <li>
+              <a href="/case-studies/<%= s.slug %>" class="<%= s.slug === study.slug ? 'active' : '' %>">
+                <%= s.title %>
+              </a>
+            </li>
+          <% }); %>
+        </ul>
+      </aside>
+      <main class="markdown-content">
+        <% if (content) { %>
+          <%- content %>
+        <% } else { %>
+          <div class="empty-state">
+            <h3>Case Study In Development</h3>
+            <p>This case study is currently being written. Check the <a href="/build-status">build status</a> for updates.</p>
+          </div>
+        <% } %>
+      </main>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

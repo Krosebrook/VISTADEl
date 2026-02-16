@@ -1,0 +1,43 @@
+<% var pageTitle = 'Tier ' + tier.id + ': ' + tier.title; %>
+<%- include('partials/head') %>
+<%- include('partials/nav') %>
+
+<div class="page-header">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="/">Home</a> <span>/</span> <a href="/tiers">Tiers</a> <span>/</span> <span><%= tier.title %></span>
+    </div>
+    <h1>Tier <%= tier.id %>: <%= tier.title %></h1>
+    <p><%= tier.description %></p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="content-layout">
+      <aside class="sidebar">
+        <ul class="sidebar-nav">
+          <% tiers.forEach(function(t) { %>
+            <li>
+              <a href="/tiers/<%= t.slug %>" class="<%= t.slug === tier.slug ? 'active' : '' %>">
+                Tier <%= t.id %>: <%= t.title %>
+              </a>
+            </li>
+          <% }); %>
+        </ul>
+      </aside>
+      <main class="markdown-content">
+        <% if (content) { %>
+          <%- content %>
+        <% } else { %>
+          <div class="empty-state">
+            <h3>Content Coming Soon</h3>
+            <p>This tier documentation is being developed.</p>
+          </div>
+        <% } %>
+      </main>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

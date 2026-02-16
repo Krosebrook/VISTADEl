@@ -1,0 +1,128 @@
+<% var pageTitle = 'Home'; %>
+<%- include('partials/head') %>
+<%- include('partials/nav') %>
+
+<section class="hero">
+  <div class="container">
+    <h1>Ship Apps <span class="highlight">Faster, Safer,</span><br>With Less Guesswork</h1>
+    <p>VISTADEL is a 7-phase development framework tested across 50+ projects in law, healthcare, SaaS, eCommerce, and manufacturing. Built on real client work from INT Inc.</p>
+    <div class="hero-actions">
+      <a href="/phases" class="btn btn-primary">Explore the Phases &rarr;</a>
+      <a href="/case-studies" class="btn btn-outline">View Case Studies</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2>The VISTADEL Framework</h2>
+      <p>Eight phases that take you from idea to production-grade application</p>
+    </div>
+
+    <div class="vistadel-flow">
+      <% phases.forEach(function(phase, i) { %>
+        <div class="flow-step">
+          <a href="/phases/<%= phase.slug %>" class="flow-letter" title="<%= phase.title %>"><%= phase.id %></a>
+        </div>
+        <% if (i < phases.length - 1) { %>
+          <span class="flow-arrow">&rarr;</span>
+        <% } %>
+      <% }); %>
+    </div>
+
+    <div class="phases-grid">
+      <% phases.forEach(function(phase) { %>
+        <a href="/phases/<%= phase.slug %>" class="phase-card">
+          <div class="phase-icon"><%= phase.icon %></div>
+          <div class="phase-letter"><%= phase.id %></div>
+          <h3><%= phase.title %></h3>
+          <p><%= phase.tagline %></p>
+          <span class="phase-link">Learn more &rarr;</span>
+        </a>
+      <% }); %>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-header">
+      <h2>Three Ways to Use VISTADEL</h2>
+      <p>Adapt the framework to your context</p>
+    </div>
+
+    <div class="tiers-grid">
+      <% tiers.forEach(function(tier) { %>
+        <a href="/tiers/<%= tier.slug %>" class="tier-card" style="border-top: 4px solid <%= tier.color %>">
+          <div class="tier-number" style="color: <%= tier.color %>">Tier <%= tier.id %></div>
+          <h3><%= tier.title %></h3>
+          <div class="subtitle"><%= tier.subtitle %></div>
+          <p><%= tier.description %></p>
+        </a>
+      <% }); %>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Real Case Studies</h2>
+      <p>Tested across professional services, healthcare, SaaS, eCommerce, and manufacturing</p>
+    </div>
+
+    <div class="cases-grid">
+      <% caseStudies.forEach(function(study) { %>
+        <a href="/case-studies/<%= study.slug %>" class="case-card">
+          <div class="case-industry" style="background: <%= study.color %>"><%= study.industry %></div>
+          <h3><%= study.title %></h3>
+          <div class="case-subtitle"><%= study.subtitle %></div>
+        </a>
+      <% }); %>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-header">
+      <h2>Key Features</h2>
+      <p>What makes VISTADEL different</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-item">
+        <div class="feature-icon">&#129302;</div>
+        <h3>AI Your BI Integration</h3>
+        <p>Claude + data + visualization woven throughout every phase for faster decisions</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">&#128218;</div>
+        <h3>Real Case Studies</h3>
+        <p>Five real-world examples from law, healthcare, SaaS, eCommerce, and manufacturing</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">&#9878;&#65039;</div>
+        <h3>Balanced Approach</h3>
+        <p>Generic framework plus INT stack specifics with Claude, Next.js, Supabase, and n8n</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">&#128640;</div>
+        <h3>Production-Ready</h3>
+        <p>Not theory. Tested on 50+ client projects across multiple verticals</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">&#128101;</div>
+        <h3>Three Tiers</h3>
+        <p>Adapt for internal sales, client enablement, or public learning</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">&#128736;&#65039;</div>
+        <h3>Open Source</h3>
+        <p>MIT License. Use freely, modify, contribute. Community-driven improvements</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>
