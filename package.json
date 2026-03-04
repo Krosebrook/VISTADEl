@@ -1,18 +1,21 @@
 {
-  "name": "workspace",
+  "name": "vistadel-framework",
   "version": "1.0.0",
-  "description": "**Version:** 1.0 (In Development)   **Last Updated:** February 2025   **Maintainer:** INT Inc. + Community",
-  "main": "index.js",
+  "description": "VISTADEL 7-phase app development framework website by INT Inc.",
+  "main": "src/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/server.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["vistadel", "framework", "app-development"],
+  "author": "INT Inc.",
+  "license": "MIT",
   "dependencies": {
+    "compression": "^1.8.1",
     "ejs": "^4.0.1",
     "express": "^5.2.1",
-    "gray-matter": "^4.0.3",
-    "marked": "^17.0.2"
+    "helmet": "^8.1.0",
+    "marked": "^17.0.2",
+    "pino": "^10.3.1",
+    "sanitize-html": "^2.17.1"
   }
 }

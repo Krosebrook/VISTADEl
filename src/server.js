@@ -1,8 +1,14 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
-const { execSync } = require('child_process');
+const { execFileSync } = require('child_process');
 const { marked } = require('marked');
+const helmet = require('helmet');
+const compression = require('compression');
+const sanitizeHtml = require('sanitize-html');
+const pino = require('pino');
+
+const logger = pino({ level: process.env.LOG_LEVEL || 'info' });
 
 const WORKSPACE = path.join(__dirname, '..');
 const CONTENT_DIR = path.join(WORKSPACE, 'vistadel-complete');
@@ -12,53 +18,92 @@ function extractArchives() {
   const tarFile = path.join(WORKSPACE, 'vistadel-skeleton.tar.gz');
 
   if (fs.existsSync(CONTENT_DIR) && fs.existsSync(path.join(CONTENT_DIR, 'README.md'))) {
-    console.log('Content already extracted.');
+    logger.info('Content already extracted.');
     return;
   }
 
   if (fs.existsSync(zipFile)) {
-    console.log('Extracting zipFile.zip...');
-    execSync(`unzip -o "${zipFile}" -d "${WORKSPACE}/extracted_zip"`, { stdio: 'inherit' });
+    logger.info('Extracting zipFile.zip...');
+    execFileSync('unzip', ['-o', zipFile, '-d', path.join(WORKSPACE, 'extracted_zip')], { stdio: 'inherit' });
     const nestedTar = path.join(WORKSPACE, 'extracted_zip', 'vistadel-skeleton.tar.gz');
     if (fs.existsSync(nestedTar)) {
-      console.log('Extracting nested vistadel-skeleton.tar.gz...');
-      execSync(`tar -xzf "${nestedTar}" -C "${WORKSPACE}"`, { stdio: 'inherit' });
+      logger.info('Extracting nested vistadel-skeleton.tar.gz...');
+      execFileSync('tar', ['-xzf', nestedTar, '-C', WORKSPACE], { stdio: 'inherit' });
     }
   }
 
   if (!fs.existsSync(CONTENT_DIR) && fs.existsSync(tarFile)) {
-    console.log('Extracting vistadel-skeleton.tar.gz...');
-    execSync(`tar -xzf "${tarFile}" -C "${WORKSPACE}"`, { stdio: 'inherit' });
+    logger.info('Extracting vistadel-skeleton.tar.gz...');
+    execFileSync('tar', ['-xzf', tarFile, '-C', WORKSPACE], { stdio: 'inherit' });
   }
 
   if (!fs.existsSync(CONTENT_DIR) || !fs.existsSync(path.join(CONTENT_DIR, 'README.md'))) {
-    console.error('WARNING: vistadel-complete content directory not found after extraction.');
+    logger.error('WARNING: vistadel-complete content directory not found after extraction.');
   } else {
-    console.log('Content extracted successfully.');
+    logger.info('Content extracted successfully.');
   }
 }
 
 extractArchives();
 
-const app = express();
-const PORT = 5000;
-
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
-app.use(express.static(path.join(__dirname, 'public')));
-app.use((req, res, next) => {
-  res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
-  next();
-});
+const markdownCache = new Map();
 
 function readMarkdown(filePath) {
+  if (markdownCache.has(filePath)) {
+    return markdownCache.get(filePath);
+  }
   try {
-    const content = fs.readFileSync(filePath, 'utf8');
-    return marked(content);
+    const raw = fs.readFileSync(filePath, 'utf8');
+    const html = marked(raw);
+    const sanitized = sanitizeHtml(html, {
+      allowedTags: sanitizeHtml.defaults.allowedTags.concat([
+        'img', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'pre', 'code',
+        'table', 'thead', 'tbody', 'tr', 'th', 'td', 'hr', 'br',
+        'del', 'input', 'details', 'summary', 'sup', 'sub'
+      ]),
+      allowedAttributes: {
+        ...sanitizeHtml.defaults.allowedAttributes,
+        img: ['src', 'alt', 'title', 'width', 'height'],
+        a: ['href', 'title', 'target', 'rel'],
+        input: ['type', 'checked', 'disabled'],
+        th: ['align'],
+        td: ['align'],
+        code: ['class'],
+        pre: ['class'],
+      },
+      allowedSchemes: ['http', 'https', 'mailto'],
+    });
+    markdownCache.set(filePath, sanitized);
+    return sanitized;
   } catch (err) {
     return null;
   }
 }
+
+const SLUG_PATTERN = /^[a-z0-9-]+$/;
+function isValidSlug(slug) {
+  return slug && slug.length <= 100 && SLUG_PATTERN.test(slug);
+}
+
+const app = express();
+const PORT = 5000;
+
+app.set('trust proxy', 1);
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      imgSrc: ["'self'", "data:", "https:"],
+      scriptSrc: ["'self'", "'unsafe-inline'"],
+    },
+  },
+}));
+app.use(compression());
+app.use(express.static(path.join(__dirname, 'public'), { maxAge: '1d' }));
 
 const phases = [
   { id: 'V', slug: 'vision', title: 'Vision', file: 'V-vision.md', tagline: 'Validate the problem before building', icon: '🔭' },
@@ -85,6 +130,30 @@ const tiers = [
   { id: 3, slug: 'public', title: 'Public', subtitle: 'Community', file: 'TIER-3-PUBLIC.md', description: "Here's how to ship fast with modern tools.", color: '#7c3aed' },
 ];
 
+function allRoutes() {
+  const routes = ['/', '/phases', '/case-studies', '/tiers', '/contributing', '/build-status'];
+  phases.forEach(p => routes.push('/phases/' + p.slug));
+  caseStudies.forEach(s => routes.push('/case-studies/' + s.slug));
+  tiers.forEach(t => routes.push('/tiers/' + t.slug));
+  return routes;
+}
+
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok', uptime: process.uptime() });
+});
+
+app.get('/robots.txt', (req, res) => {
+  res.type('text/plain');
+  res.send('User-agent: *\nAllow: /\nSitemap: ' + req.protocol + '://' + req.get('host') + '/sitemap.xml');
+});
+
+app.get('/sitemap.xml', (req, res) => {
+  const baseUrl = req.protocol + '://' + req.get('host');
+  const urls = allRoutes().map(r => `  <url><loc>${baseUrl}${r}</loc></url>`).join('\n');
+  res.type('application/xml');
+  res.send(`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>`);
+});
+
 app.get('/', (req, res) => {
   res.render('index', { phases, caseStudies, tiers, activePage: 'home' });
 });
@@ -93,9 +162,10 @@ app.get('/phases', (req, res) => {
   res.render('phases', { phases, activePage: 'phases' });
 });
 
-app.get('/phases/:slug', (req, res) => {
+app.get('/phases/:slug', (req, res, next) => {
+  if (!isValidSlug(req.params.slug)) return res.status(404).render('404', { activePage: '' });
   const phase = phases.find(p => p.slug === req.params.slug);
-  if (!phase) return res.status(404).render('404');
+  if (!phase) return res.status(404).render('404', { activePage: '' });
   const content = readMarkdown(path.join(CONTENT_DIR, 'phases', phase.file));
   res.render('phase-detail', { phase, content, phases, activePage: 'phases' });
 });
@@ -104,9 +174,10 @@ app.get('/case-studies', (req, res) => {
   res.render('case-studies', { caseStudies, activePage: 'case-studies' });
 });
 
-app.get('/case-studies/:slug', (req, res) => {
+app.get('/case-studies/:slug', (req, res, next) => {
+  if (!isValidSlug(req.params.slug)) return res.status(404).render('404', { activePage: '' });
   const study = caseStudies.find(s => s.slug === req.params.slug);
-  if (!study) return res.status(404).render('404');
+  if (!study) return res.status(404).render('404', { activePage: '' });
   const content = readMarkdown(path.join(CONTENT_DIR, 'case-studies', 'public', study.file));
   res.render('case-study-detail', { study, content, caseStudies, activePage: 'case-studies' });
 });
@@ -115,9 +186,10 @@ app.get('/tiers', (req, res) => {
   res.render('tiers', { tiers, activePage: 'tiers' });
 });
 
-app.get('/tiers/:slug', (req, res) => {
+app.get('/tiers/:slug', (req, res, next) => {
+  if (!isValidSlug(req.params.slug)) return res.status(404).render('404', { activePage: '' });
   const tier = tiers.find(t => t.slug === req.params.slug);
-  if (!tier) return res.status(404).render('404');
+  if (!tier) return res.status(404).render('404', { activePage: '' });
   const content = readMarkdown(path.join(CONTENT_DIR, tier.file));
   res.render('tier-detail', { tier, content, tiers, activePage: 'tiers' });
 });
@@ -133,9 +205,33 @@ app.get('/build-status', (req, res) => {
 });
 
 app.use((req, res) => {
-  res.status(404).render('404');
+  logger.warn({ path: req.path, method: req.method }, '404 Not Found');
+  res.status(404).render('404', { activePage: '' });
 });
 
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`VISTADEL server running on http://0.0.0.0:${PORT}`);
+app.use((err, req, res, next) => {
+  logger.error({ err, path: req.path }, 'Unhandled error');
+  res.status(500).send(`<!DOCTYPE html><html><head><title>500 Server Error</title><style>body{font-family:sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;background:#f8fafc;color:#334155;}div{text-align:center;}h1{font-size:3rem;color:#0f172a;margin-bottom:8px;}p{color:#64748b;}a{color:#3b82f6;}</style></head><body><div><h1>500</h1><p>Something went wrong. Please try again later.</p><a href="/">Back to Home</a></div></body></html>`);
+});
+
+process.on('uncaughtException', (err) => {
+  logger.fatal({ err }, 'Uncaught exception');
+  process.exit(1);
+});
+
+process.on('unhandledRejection', (reason) => {
+  logger.error({ reason }, 'Unhandled rejection');
+});
+
+const server = app.listen(PORT, '0.0.0.0', () => {
+  logger.info(`VISTADEL server running on http://0.0.0.0:${PORT}`);
+});
+
+process.on('SIGTERM', () => {
+  logger.info('SIGTERM received, shutting down gracefully...');
+  server.close(() => {
+    logger.info('Server closed.');
+    process.exit(0);
+  });
+  setTimeout(() => process.exit(1), 10000);
 });
