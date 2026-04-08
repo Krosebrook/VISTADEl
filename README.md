@@ -73,17 +73,43 @@ Start with [Phase V: Vision](./phases/V-vision.md) or jump to the [FAQ](./faq/fa
 
 ---
 
+## Best Practices
+
+When working in this repository, follow these conventions:
+
+- **Content first:** Every recommendation must be backed by a real example or tested code.
+- **Tradeoffs:** Explain *why*, not just *how*. Every tool choice should include tradeoffs.
+- **Compliance explicitness:** State compliance assumptions (HIPAA, SOC 2, PCI-DSS, GDPR) wherever relevant.
+- **No promotional language:** Community-first tone — no vendor lock-in or sales copy.
+- **Tested code:** All code examples must run. No untested snippets.
+- **AI-safe prompts:** Claude prompts must be tested before inclusion in any phase doc.
+- **Security:** All markdown is sanitized server-side. Slugs are validated. No stack traces exposed in production.
+
+---
+
 ## Contributing
 
 VISTADEL is actively developed. Issues, PRs, and feedback welcome.
 
-**Guidelines:**
+**Quick guidelines:**
 - Each phase should stand alone but integrate with others
 - Examples must be real (no theory-only recommendations)
-- Compliance assumptions must be explicit (HIPAA, SOC 2, PCI-DSS, GDPR)
+- Compliance assumptions must be explicit
 - Claude prompts must be tested before inclusion
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md) for details.
+See [CONTRIBUTING.md](./vistadel-complete/CONTRIBUTING.md) for the full contribution guide.
+
+---
+
+## Roadmap
+
+See [ROADMAP.md](./ROADMAP.md) for upcoming features, planned content, and how to influence priorities.
+
+---
+
+## Working with AI Assistants
+
+See [CLAUDE.md](./CLAUDE.md) for a full technical brief on the project — stack, conventions, routes, and how to make changes safely.
 
 ---
 
@@ -95,8 +121,9 @@ MIT License — use freely, modify, attribute.
 
 ## Questions?
 
-- **Framework questions:** See [FAQ](./faq/faq.md)
-- **Technical issues:** [Troubleshooting](./troubleshooting/troubleshooting.md)
+- **Framework questions:** See [FAQ](./vistadel-complete/faq/faq.md)
+- **Technical issues:** [Troubleshooting](./vistadel-complete/troubleshooting/troubleshooting.md)
+- **Roadmap:** [ROADMAP.md](./ROADMAP.md)
 - **INT-specific:** contact@intinc.com
 - **Community:** Open an issue on GitHub
 
