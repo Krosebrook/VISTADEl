@@ -8,7 +8,7 @@
 
 ## What is VISTADEL?
 
-VISTADEL is a **7-phase app development framework** designed to help teams ship production-grade applications faster, safer, and with less guesswork.
+VISTADEL is a **8-phase app development framework** designed to help teams ship production-grade applications faster, safer, and with less guesswork.
 
 Built on real client work from INT Inc., tested across professional services, healthcare, SaaS, eCommerce, and manufacturing verticals.
 

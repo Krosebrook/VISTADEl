@@ -6,7 +6,7 @@ This file gives Claude (and other AI assistants) the context needed to work effe
 
 ## What Is This Project?
 
-**VISTADEL** is a 7-phase app development framework built by INT Inc. It helps teams ship production-grade applications faster, safer, and with less guesswork.
+**VISTADEL** is a 8-phase app development framework built by INT Inc. It helps teams ship production-grade applications faster, safer, and with less guesswork.
 
 **V**ision → **I**ntegration → **S**tack → **T**esting → **A**I Implementation → **D**eployment → **E**volution → **L**aunch
 

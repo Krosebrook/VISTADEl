@@ -1,6 +1,6 @@
 # VISTADEL Roadmap
 
-**Framework:** VISTADEL 7-Phase App Development  
+**Framework:** VISTADEL 8-Phase App Development  
 **Maintainer:** INT Inc. + Community  
 **Last Updated:** April 2026
 
