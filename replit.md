@@ -1,7 +1,7 @@
 # VISTADEL Framework Website
 
 ## Overview
-A web application that presents the VISTADEL (Vision, Integration, Stack, Testing, AI Implementation, Deployment, Evolution, Launch) 7-phase app development framework. Built for INT Inc. and the community.
+A web application that presents the VISTADEL (Vision, Integration, Stack, Testing, AI Implementation, Deployment, Evolution, Launch) 8-phase app development framework. Built for INT Inc. and the community.
 
 ## Tech Stack
 - **Runtime:** Node.js 20

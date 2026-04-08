@@ -2,6 +2,8 @@
 
 Thanks for considering contributing! This framework is built on real client work and community feedback.
 
+---
+
 ## How to Contribute
 
 ### 1. Small Changes (Typos, Clarity)
@@ -72,21 +74,57 @@ Each phase/section includes:
 - Add comments explaining key decisions
 - Use consistent style with rest of repo
 
+### Compliance & Security
+- Explicitly state any compliance assumptions (HIPAA, SOC 2, PCI-DSS, GDPR) at the top of the relevant section
+- Do not include real credentials, API keys, or secrets in any example — use placeholders like `YOUR_API_KEY`
+- When showing authentication or data-handling patterns, call out security considerations inline
+
+### AI Prompts
+- All Claude (or other LLM) prompts must be tested before inclusion
+- Include the expected output or outcome so readers can verify correctness
+- Note any model version or behaviour assumptions
+
+---
+
+## Best Practices for Phase Documentation
+
+When writing or updating a phase document:
+
+1. **Start with the outcome** — what does success look like when this phase is complete?
+2. **Be specific** — "5 user interviews minimum" beats "talk to users"
+3. **Use real names** — case study companies are real (Martensen IP, Accolade, Destwin, RadioMall, Gardien Products). Reference them.
+4. **Acknowledge failure modes** — every phase has common mistakes. Call them out.
+5. **Include a decision tree** — when should someone skip or combine phases?
+6. **Link forward and back** — each phase should reference the phase before and after it
+7. **Include a template** — a fillable artefact the reader can use immediately
+
 ---
 
 ## PR Process
 
 1. **Fork** the repo
 2. **Create branch:** `feature/your-feature-name` or `fix/your-fix`
-3. **Make changes** following standards above
-4. **Test:** Run examples, check links, proofread
+3. **Make changes** following the standards above
+4. **Test:** Run all code examples, check all links, proofread
 5. **Submit PR** with:
    - Clear title (what's changing?)
-   - Description (why? what problem?)
+   - Description (why? what problem does it solve?)
    - Links to relevant phase/issue
-6. **Wait for review** (2–5 days)
+6. **Wait for review** (2–5 business days)
 7. **Iterate** based on feedback
 8. **Merge!** 🎉
+
+---
+
+## Server / Website Changes
+
+If your PR touches `src/server.js` or any EJS template:
+
+- Start the server locally (`npm start`) and manually verify affected routes
+- Do not expose stack traces or internal paths in error responses
+- All markdown rendered to HTML must pass through `sanitize-html` — never render raw markdown directly
+- Validate slug parameters before using them in file paths
+- Use the pino `logger` (not `console.log`) for all server-side logging
 
 ---
 
@@ -105,6 +143,7 @@ Each phase/section includes:
 - Test your code
 - Link related content
 - Explain a tradeoff
+- State a compliance assumption explicitly
 
 ---
 
@@ -120,15 +159,16 @@ Each phase/section includes:
 
 ## Questions?
 
-- **Contribution questions:** Open a Discussion
-- **Content questions:** Comment on relevant issue
+- **Contribution questions:** Open a GitHub Discussion
+- **Content questions:** Comment on the relevant issue
 - **General feedback:** GitHub Discussions
+- **INT-specific:** contact@intinc.com
 
 ---
 
 ## License
 
-By contributing, you agree your work will be shared under MIT License.
+By contributing, you agree your work will be shared under the MIT License.
 
 ---
 

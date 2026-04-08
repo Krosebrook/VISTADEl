@@ -7,7 +7,7 @@ Frequently asked questions about the VISTADEL framework, organized by topic.
 ## Getting Started
 
 **What is VISTADEL?**
-VISTADEL is a 7-phase app development framework built by INT Inc. based on 50+ real client projects. The acronym stands for: Vision → Integration → Stack → Testing → AI Implementation → Deployment → Evolution → Launch. It gives teams a repeatable structure for shipping production-grade applications with less guesswork and fewer expensive mistakes.
+VISTADEL is a 8-phase app development framework built by INT Inc. based on 50+ real client projects. The acronym stands for: Vision → Integration → Stack → Testing → AI Implementation → Deployment → Evolution → Launch. It gives teams a repeatable structure for shipping production-grade applications with less guesswork and fewer expensive mistakes.
 
 **Who is VISTADEL for?**
 VISTADEL works for three audiences: (1) INT team members using it as a delivery methodology, (2) INT clients learning how to work with INT on a project, and (3) any founder, engineer, or team building an app and wanting a tested framework to follow. See [TIER-3-PUBLIC.md](../TIER-3-PUBLIC.md) for community use.
