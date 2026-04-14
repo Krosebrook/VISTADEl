@@ -139,5 +139,5 @@ When Tier 1/3 content changes:
 
 ---
 
-**Last updated:** February 2025  
+**Last updated:** April 2026  
 **Owner:** Kyle (AI SME) + INT Client Success team

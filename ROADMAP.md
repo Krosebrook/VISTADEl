@@ -43,14 +43,15 @@ Core framework content and website.
 
 ---
 
-## Phase 2 — Developer Experience (Q2 2026 🔜)
+## Phase 2 — Developer Experience (Q2 2026 ✅)
 
 Make it easier to run, contribute, and extend the framework.
 
-- [ ] Add a `.github/` directory with issue templates and PR template
-- [ ] Add `CHANGELOG.md`
-- [ ] Add `SECURITY.md` (vulnerability disclosure policy)
-- [ ] Add `CODE_OF_CONDUCT.md` (Contributor Covenant)
+- [x] Add a `.github/` directory with issue templates and PR template
+- [x] Add `CHANGELOG.md`
+- [x] Add `SECURITY.md` (vulnerability disclosure policy)
+- [x] Add `CODE_OF_CONDUCT.md` (Contributor Covenant)
+- [x] Add root-level `CONTRIBUTING.md` (alias)
 - [ ] Add environment variable documentation (`.env.example`)
 - [ ] Add Dockerfile for containerised deployment
 - [ ] Add `npm test` script (basic smoke tests for routes)
@@ -140,12 +141,14 @@ Improvements to the website experience.
 
 | Priority | Item | Owner | Status |
 |----------|------|-------|--------|
-| 🔴 High | `.github/` issue + PR templates | Community | 🔜 |
-| 🔴 High | `CHANGELOG.md` | INT Inc. | 🔜 |
-| 🔴 High | `SECURITY.md` | INT Inc. | 🔜 |
-| 🔴 High | `CODE_OF_CONDUCT.md` | INT Inc. | 🔜 |
-| 🟡 Medium | GitHub Actions CI | Community | 🔜 |
-| 🟡 Medium | Dockerfile | Community | 🔜 |
+| ✅ Done | `.github/` issue + PR templates | Community | ✅ |
+| ✅ Done | `CHANGELOG.md` | INT Inc. | ✅ |
+| ✅ Done | `SECURITY.md` | INT Inc. | ✅ |
+| ✅ Done | `CODE_OF_CONDUCT.md` | INT Inc. | ✅ |
+| 🔴 High | GitHub Actions CI | Community | 🔜 |
+| 🔴 High | Dockerfile | Community | 🔜 |
+| 🟡 Medium | Stack guide deep dives | INT Inc. | 🗓 |
+| 🟡 Medium | Video scripts | INT Inc. | 🗓 |
 | 🟢 Low | Dark mode | Community | 💡 |
 | 🟢 Low | Full-text search | Community | 💡 |
 
@@ -169,6 +172,7 @@ Improvements to the website experience.
 | Production-readiness audit (18 fixes) | Mar 4, 2026 |
 | Website live on Replit | April 2026 |
 | CLAUDE.md + ROADMAP.md added | April 2026 |
+| CHANGELOG, SECURITY, CODE_OF_CONDUCT, .github/ templates added | April 2026 |
 
 ---
 
