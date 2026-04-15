@@ -1,7 +1,7 @@
 {
   "name": "vistadel-framework",
   "version": "1.0.0",
-  "description": "VISTADEL 7-phase app development framework website by INT Inc.",
+  "description": "VISTADEL 8-phase app development framework website by INT Inc.",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js"
