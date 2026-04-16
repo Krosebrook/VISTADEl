@@ -1,0 +1,58 @@
+name: Agent - Dependency
+
+on:
+  schedule:
+    - cron: '31 4 * * 2'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: agent-dependency
+  cancel-in-progress: false
+
+jobs:
+  update-dependencies:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run dependency agent
+        run: node agents/dependency/index.js --mode=update
+
+      - name: Upload dependency report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dependency-agent-report
+          path: |
+            agents/dependency/output/dependency-report.json
+            agents/dependency/output/dependency-report.md
+          if-no-files-found: warn
+
+      - name: Create dependency PR
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "chore(deps): automated dependency maintenance"
+          branch: "chore/dependency-agent-updates"
+          delete-branch: false
+          title: "chore(deps): automated dependency maintenance"
+          body-path: "agents/dependency/output/dependency-report.md"
+          labels: |
+            chore
+            dependencies
+          add-paths: |
+            package-lock.json

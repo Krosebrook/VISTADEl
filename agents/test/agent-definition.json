@@ -1,0 +1,13 @@
+{
+  "name": "TEST_AGENT",
+  "purpose": "Run an HTTP smoke test to verify the Express app starts and serves /health reliably.",
+  "triggers": ["pull_request", "push", "workflow_dispatch"],
+  "inputs": {
+    "configPath": "agents/test/.agentrc.json"
+  },
+  "outputs": {
+    "report": "agents/test/output/test-report.json"
+  },
+  "risk_level": "low",
+  "dependencies": ["node", "npm", "project dependencies"]
+}

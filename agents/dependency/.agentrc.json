@@ -1,0 +1,4 @@
+{
+  "jsonReportPath": "agents/dependency/output/dependency-report.json",
+  "markdownReportPath": "agents/dependency/output/dependency-report.md"
+}

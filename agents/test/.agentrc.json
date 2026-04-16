@@ -1,0 +1,8 @@
+{
+  "port": 5000,
+  "path": "/health",
+  "host": "127.0.0.1",
+  "startupTimeoutMs": 30000,
+  "pollIntervalMs": 750,
+  "reportPath": "agents/test/output/test-report.json"
+}

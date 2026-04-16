@@ -4,3 +4,7 @@ extracted_zip/
 *.zip
 *.tar.gz
 .local/
+
+# Agent runtime artifacts
+agents/*/output/*.json
+agents/*/output/*.md
