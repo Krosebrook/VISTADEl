@@ -1,0 +1,15 @@
+{
+  "name": "SECURITY_AGENT",
+  "purpose": "Continuously assess dependency and static-analysis risk with auditable outputs.",
+  "triggers": ["pull_request", "schedule", "workflow_dispatch"],
+  "inputs": {
+    "configPath": "agents/security/.agentrc.json",
+    "enforce": "boolean"
+  },
+  "outputs": {
+    "jsonReport": "agents/security/output/security-report.json",
+    "markdownReport": "agents/security/output/security-report.md"
+  },
+  "risk_level": "high",
+  "dependencies": ["node", "npm", "github/codeql-action", "gitleaks"]
+}

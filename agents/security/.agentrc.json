@@ -1,0 +1,5 @@
+{
+  "auditLevel": "high",
+  "jsonReportPath": "agents/security/output/security-report.json",
+  "markdownReportPath": "agents/security/output/security-report.md"
+}

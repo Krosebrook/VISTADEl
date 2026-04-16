@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "generatedAt": "2026-04-16T00:10:46.296Z",
+  "agents": [
+    {
+      "id": "test-agent",
+      "type": "TEST_AGENT",
+      "path": "agents/test",
+      "workflow": ".github/workflows/agent-test.yml",
+      "risk": "low",
+      "enabled": true
+    },
+    {
+      "id": "security-agent",
+      "type": "SECURITY_AGENT",
+      "path": "agents/security",
+      "workflow": ".github/workflows/agent-security.yml",
+      "risk": "high",
+      "enabled": true
+    },
+    {
+      "id": "dependency-agent",
+      "type": "DEPENDENCY_AGENT",
+      "path": "agents/dependency",
+      "workflow": ".github/workflows/agent-dependency.yml",
+      "risk": "medium",
+      "enabled": true
+    }
+  ]
+}

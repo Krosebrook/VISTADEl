@@ -1,0 +1,15 @@
+{
+  "name": "DEPENDENCY_AGENT",
+  "purpose": "Detect and apply safe dependency updates on a schedule with transparent change reporting.",
+  "triggers": ["schedule", "workflow_dispatch"],
+  "inputs": {
+    "configPath": "agents/dependency/.agentrc.json",
+    "mode": "report|update"
+  },
+  "outputs": {
+    "jsonReport": "agents/dependency/output/dependency-report.json",
+    "markdownReport": "agents/dependency/output/dependency-report.md"
+  },
+  "risk_level": "medium",
+  "dependencies": ["node", "npm", "peter-evans/create-pull-request"]
+}
