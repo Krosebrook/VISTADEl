@@ -48,7 +48,7 @@ async function main() {
   const config = loadConfig(args.config);
   const url = `http://${config.host}:${config.port}${config.path}`;
 
-  const child = spawn('npm', ['start'], {
+  const child = spawn('node', ['src/server.js'], {
     cwd: process.cwd(),
     stdio: ['ignore', 'pipe', 'pipe'],
     env: process.env
